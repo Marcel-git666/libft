@@ -6,20 +6,20 @@
 #    By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 21:40:51 by mmravec           #+#    #+#              #
-#    Updated: 2024/09/03 22:10:41 by mmravec          ###   ########.fr        #
+#    Updated: 2024/09/03 22:46:43 by mmravec          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Variables
-NAME = test                    # The name of the test executable
-CC = gcc-14                    # Compiler to use
-CFLAGS = -Wall -Werror -Wextra -g # Compilation flags
-LIBFT_PATH = ..         # Path to your libft directory
-LIBFT = $(LIBFT_PATH)/libft.a  # Path to the libft static library
+NAME = test
+CC = gcc-14
+CFLAGS = -Wall -Werror -Wextra -g
+LIBFT_PATH = ../ 
+LIBFT = $(LIBFT_PATH)libft.a
 
 # Source files
-SRCS = main.c                  # Add more test source files here if needed
-OBJS = $(SRCS:.c=.o)           # Object files, derived from SRCS
+SRCS = main.c
+OBJS = $(SRCS:.c=.o)
 
 # Target to create the test executable
 $(NAME): $(OBJS) $(LIBFT)
