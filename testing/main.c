@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:39:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/06 17:25:59 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/06 18:56:03 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main(void)
 	test_strchr();
 	test_strrchr();
 	test_strncmp();
+	test_memset();
 
     return (0);
 }
@@ -132,4 +133,19 @@ void test_strncmp(void)
 	int		n = 21;
 
 	printf("Difference between s1 and s2 while comparing: %d chars is: %d\n", n, ft_strncmp(s1, s2, n));
+}
+
+void test_memset(void)
+{
+	char str[50];
+
+   strcpy(str, "Welcome to testing ft_memset");
+   puts(str);
+
+   ft_memset(str, '#', 7);
+   puts(str);
+
+   strcpy(str, "Welcome to original memset");
+   memset(str, '#', 7);
+   puts(str);
 }

@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 21:47:02 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/06 18:41:47 by mmravec          ###   ########.fr       */
+/*   Created: 2024/09/06 18:25:52 by mmravec           #+#    #+#             */
+/*   Updated: 2024/09/06 18:45:36 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <string.h>
+#include "libft.h"
 
-void test_isalpha(void);
-void test_isdigit(void);
-void test_isalnum(void);
-void test_isascii(void);
-void test_isprint(void);
-void test_strlen(void);
-void test_toupper(void);
-void test_tolower(void);
-void test_strchr(void);
-void test_strrchr(void);
-void test_strncmp(void);
-void test_memset(void);
+void    *ft_memset(void *b, int c, size_t len)
+{
+    unsigned char   *origin;
+    size_t          i;
+
+    i = 0;
+    origin = (unsigned char *)b;
+    while (i < len)
+    {
+        origin[i] = c;
+        i++;
+    }
+    return (b);
+}
