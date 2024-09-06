@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 18:32:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/06 12:05:46 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/06 17:25:18 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int     ft_isprint(int c);
 int     ft_toupper(int c);
 int     ft_tolower(int c);
 char    *ft_strchr(const char *s, int c);
-
+char    *ft_strrchr(const char *s, int c);
+int     ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif

@@ -6,15 +6,16 @@
 #    By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 22:02:38 by mmravec           #+#    #+#              #
-#    Updated: 2024/09/06 12:10:49 by mmravec          ###   ########.fr        #
+#    Updated: 2024/09/06 17:19:07 by mmravec          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libft.a            # Name of the static library
-CC = gcc-14                  # Compiler to use
-CFLAGS = -Wall -Werror -Wextra # Compilation flags
+NAME = libft.a
+CC = gcc-14
+CFLAGS = -Wall -Werror -Wextra
 SRCS = ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \
-       ft_strlen.c ft_toupper.c ft_tolower.c ft_strchr.c
+       ft_strlen.c ft_toupper.c ft_tolower.c ft_strchr.c ft_strrchr.c \
+	   ft_strncmp.c 
 OBJS = $(SRCS:.c=.o)      # Object files corresponding to .c files
 
 # Rule to create the static library

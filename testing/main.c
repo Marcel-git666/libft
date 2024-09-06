@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:39:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/06 12:18:30 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/06 17:25:59 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	main(void)
 	test_toupper();
 	test_tolower();
 	test_strchr();
+	test_strrchr();
+	test_strncmp();
 
     return (0);
 }
@@ -105,4 +107,29 @@ void test_strchr(void)
 
 	c = '.';
 	printf("Looking for first occurence of character %c in string: %s\nFound: %s\n", c, s, ft_strchr(s, c));
+}
+
+void test_strrchr(void)
+{
+	char	c;
+	char	*s = "Three Rings for the Elven-kings under the sky, "
+				"Seven for the Dwarf-lords in their halls of stone, "
+				"Nine for Mortal Men, doomed to die, "
+				"One for the Dark Lord on his dark throne "
+				"In the Land of Mordor where the Shadows lie. "
+				"One Ring to rule them all, One Ring to find them, "
+				"One Ring to bring them all and in the darkness bind them. "
+				"In the Land of Mordor where the Shadows lie.";
+
+	c = 'l';
+	printf("Looking for last occurence of character %c in string: %s\nFound: %s\n", c, s, ft_strrchr(s, c));
+}
+
+void test_strncmp(void)
+{
+	char	*s1 = "Three Rings for the Elven-kings";
+	char	*s2 = "Three Rings for the elven-kings";
+	int		n = 21;
+
+	printf("Difference between s1 and s2 while comparing: %d chars is: %d\n", n, ft_strncmp(s1, s2, n));
 }

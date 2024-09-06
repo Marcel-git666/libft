@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 21:47:02 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/06 17:25:15 by mmravec          ###   ########.fr       */
+/*   Created: 2024/09/06 15:53:17 by mmravec           #+#    #+#             */
+/*   Updated: 2024/09/06 17:15:44 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
-void test_isalpha(void);
-void test_isdigit(void);
-void test_isalnum(void);
-void test_isascii(void);
-void test_isprint(void);
-void test_strlen(void);
-void test_toupper(void);
-void test_tolower(void);
-void test_strchr(void);
-void test_strrchr(void);
-void test_strncmp(void);
+char    *ft_strrchr(const char *s, int c)
+{
+    int  i;
+
+    i = (int)ft_strlen(s) - 1;
+
+    while (i >= 0) {
+        if (s[i] == c)
+            return ((char *)&s[i]);
+        i--;
+    }
+    return (NULL);
+}
