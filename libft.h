@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 18:32:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/03 22:06:28 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/06 12:05:46 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ int     ft_isalpha(int c);
 int     ft_isdigit(int c);
 int     ft_isalnum(int c);
 int	    ft_isascii(int c);
-size_t  strlen(const char *s);
+size_t  ft_strlen(const char *s);
+int     ft_isprint(int c);
 int     ft_toupper(int c);
+int     ft_tolower(int c);
+char    *ft_strchr(const char *s, int c);
+
 
 #endif

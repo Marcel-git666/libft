@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 21:47:02 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/06 11:57:39 by mmravec          ###   ########.fr       */
+/*   Created: 2024/09/06 10:01:32 by mmravec           #+#    #+#             */
+/*   Updated: 2024/09/06 12:16:56 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
-void test_isalpha(void);
-void test_isdigit(void);
-void test_isalnum(void);
-void test_isascii(void);
-void test_isprint(void);
-void test_strlen(void);
-void test_toupper(void);
-void test_tolower(void);
-void test_strchr(void);
+char    *ft_strchr(const char *s, int c)
+{
+    while (*s) {
+        if (*s == c)
+            return ((char *)s);
+        s++;
+    }
+    if (*s == c) // Check if the null terminator matches 'c'
+        return ((char *)s);
+    return (NULL);
+}
