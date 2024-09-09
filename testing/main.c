@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:39:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/09 13:16:55 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/09 14:48:03 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ int	main(void)
 	test_bzero();
 	test_memcpy();
 	test_memmove();
-
+	test_strlcpy();
+	test_strlcat();
+	 
     return (0);
 }
 
@@ -209,4 +211,69 @@ const char src[50] = "42 Prague";
    	printf("Before memmove dest = %s\n", dest);
    	memmove(dest, src, 3);
    	printf("After memmove dest = %s\n", dest);
+}
+
+void test_strlcpy(void)
+{
+char src[50] = "42 Prague";
+    char dest[50];
+    size_t n;
+
+    // Test ft_strlcpy
+    strcpy(dest, "Hello World!!");
+    printf("Before ft_strlcpy dest = %s\n", dest);
+
+    n = ft_strlcpy(dest, src, 5);  // Copy up to 4 chars + null terminator
+    printf("After ft_strlcpy (5 bytes) dest = %s, return value = %zu\n", dest, n);
+
+    strcpy(dest, "Hello World!!");
+    printf("Before ft_strlcpy dest = %s\n", dest);
+
+    n = ft_strlcpy(dest, src, sizeof(dest));  // Copy the entire string
+    printf("After ft_strlcpy (entire src) dest = %s, return value = %zu\n", dest, n);
+
+    // Test original strlcpy
+    strcpy(dest, "Hello World!!");
+    printf("Before strlcpy dest = %s\n", dest);
+
+    n = strlcpy(dest, src, 5);  // Copy up to 4 chars + null terminator
+    printf("After strlcpy (5 bytes) dest = %s, return value = %zu\n", dest, n);
+
+    strcpy(dest, "Hello World!!");
+    printf("Before strlcpy dest = %s\n", dest);
+
+    n = strlcpy(dest, src, sizeof(dest));  // Copy the entire string
+    printf("After strlcpy (entire src) dest = %s, return value = %zu\n", dest, n);
+}
+
+void test_strlcat(void) {
+    char src[50] = "42 Prague";
+    char dest[50];
+    size_t n;
+
+    // Test ft_strlcat
+    strcpy(dest, "Hello ");
+    printf("Before ft_strlcat dest = %s\n", dest);
+
+    n = ft_strlcat(dest, src, 15);  // Append with enough space
+    printf("After ft_strlcat (size 15) dest = %s, return value = %zu\n", dest, n);
+
+    strcpy(dest, "Hello ");
+    printf("Before ft_strlcat dest = %s\n", dest);
+
+    n = ft_strlcat(dest, src, 10);  // Append but with limited space
+    printf("After ft_strlcat (size 10) dest = %s, return value = %zu\n", dest, n);
+
+    // Test original strlcat
+    strcpy(dest, "Hello ");
+    printf("Before strlcat dest = %s\n", dest);
+
+    n = strlcat(dest, src, 15);  // Append with enough space
+    printf("After strlcat (size 15) dest = %s, return value = %zu\n", dest, n);
+
+    strcpy(dest, "Hello ");
+    printf("Before strlcat dest = %s\n", dest);
+
+    n = strlcat(dest, src, 10);  // Append but with limited space
+    printf("After strlcat (size 10) dest = %s, return value = %zu\n", dest, n);
 }
