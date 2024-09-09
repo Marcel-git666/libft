@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 21:47:02 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/09 12:29:26 by mmravec          ###   ########.fr       */
+/*   Created: 2024/09/09 12:01:21 by mmravec           #+#    #+#             */
+/*   Updated: 2024/09/09 12:28:48 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <string.h>
+#include "libft.h"
 
-void test_isalpha(void);
-void test_isdigit(void);
-void test_isalnum(void);
-void test_isascii(void);
-void test_isprint(void);
-void test_strlen(void);
-void test_toupper(void);
-void test_tolower(void);
-void test_strchr(void);
-void test_strrchr(void);
-void test_strncmp(void);
-void test_memset(void);
-void test_bzero(void);
-void test_memcpy(void);
+void    *ft_memcpy(void *restrict dst, const void *restrict src, size_t n)
+{
+    size_t      i;
+    char        *csrc; 
+    char        *cdst; 
+
+    csrc = (char *)src;
+    cdst = (char *)dst;
+    i = 0;
+    while (i < n)
+    {
+        cdst[i] = csrc[i];
+        i++;
+    }
+    return (dst);
+}

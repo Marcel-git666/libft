@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:39:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/06 18:56:03 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/09 12:32:43 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	main(void)
 	test_strrchr();
 	test_strncmp();
 	test_memset();
+	test_bzero();
+	test_memcpy();
 
     return (0);
 }
@@ -148,4 +150,48 @@ void test_memset(void)
    strcpy(str, "Welcome to original memset");
    memset(str, '#', 7);
    puts(str);
+}
+
+void print_memory(const char *str, size_t len)
+{
+    for (size_t i = 0; i < len; i++) {
+        if (str[i] == '\0')
+            printf("\\0");  
+        else
+            printf("%c", str[i]);
+    }
+    printf("\n");
+}
+
+void test_bzero(void)
+{
+	char str[50];
+
+	strcpy(str, "Welcome to testing ft_bzero");
+   	puts(str);
+
+   	ft_bzero(str, 3);
+    print_memory(str, ft_strlen("Welcome to testing ft_bzero") + 1); 
+
+    // Test original bzero
+    strcpy(str, "Welcome to original bzero");
+    puts(str);
+
+    bzero(str, 3);
+    print_memory(str, ft_strlen("Welcome to testing bzero") + 1);
+}
+
+void test_memcpy(void)
+{
+	const char src[50] = "42 Prague";
+   	char dest[50];
+   	strcpy(dest,"Heloooo!!");
+   	printf("Before ft_memcpy dest = %s\n", dest);
+   	ft_memcpy(dest, src, ft_strlen(src) + 1);
+   	printf("After ft_memcpy dest = %s\n", dest);
+	strcpy(dest,"Heloooo!!");
+   	printf("Before memcpy dest = %s\n", dest);
+   	memcpy(dest, src, strlen(src) + 1);
+   	printf("After memcpy dest = %s\n", dest);
+
 }

@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 21:47:02 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/09 12:29:26 by mmravec          ###   ########.fr       */
+/*   Created: 2024/09/09 10:58:53 by mmravec           #+#    #+#             */
+/*   Updated: 2024/09/09 11:29:41 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <string.h>
+#include "libft.h"
 
-void test_isalpha(void);
-void test_isdigit(void);
-void test_isalnum(void);
-void test_isascii(void);
-void test_isprint(void);
-void test_strlen(void);
-void test_toupper(void);
-void test_tolower(void);
-void test_strchr(void);
-void test_strrchr(void);
-void test_strncmp(void);
-void test_memset(void);
-void test_bzero(void);
-void test_memcpy(void);
+void    ft_bzero(void *s, size_t n)
+{
+    unsigned char   *origin;
+    size_t          i;
+
+    i = 0;
+    origin = (unsigned char *)s;
+    while (i < n)
+    {
+        origin[i] = 0;
+        i++;
+    }
+}
