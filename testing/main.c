@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:39:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/09 21:02:01 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/09 21:35:41 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,13 @@ int	main(void)
 	test_strlcat();
 	test_memchr();
 	test_memcmp();
-	test_strnstr(); 
+	test_strnstr();
+	test_atoi();
+	test_calloc();
+	test_strdup();
+	printf("\n\n===============================\n");
+	printf(    "=========== PART 2 ============\n");
+	printf(    "===============================\n");
 	
     return (0);
 }
@@ -428,4 +434,145 @@ void test_strnstr(void) {
         printf("strnstr found '%s' in '%s' within len=7: %s\n", needle4, haystack1, result);
     else
         printf("strnstr did not find '%s' in '%s' within len=7\n", needle4, haystack1);
+}
+
+void test_atoi(void)
+{
+    const char *str1 = "42";
+    const char *str2 = "-42";
+    const char *str3 = "   1234abc";
+    const char *str4 = "2147483647";      // INT_MAX
+    const char *str5 = "-2147483648";     // INT_MIN
+    const char *str6 = "2147483648";      // Overflow
+    const char *str7 = "-2147483649";     // Underflow
+    const char *str8 = "+987";            // Positive sign
+    const char *str9 = "   -001234";      // Leading spaces and zeros
+    int result;
+
+    // Test case 1: Simple positive number
+    result = ft_atoi(str1);
+    printf("ft_atoi(\"%s\") = %d\n", str1, result);
+
+    // Test case 2: Simple negative number
+    result = ft_atoi(str2);
+    printf("ft_atoi(\"%s\") = %d\n", str2, result);
+
+    // Test case 3: Leading spaces and characters after the number
+    result = ft_atoi(str3);
+    printf("ft_atoi(\"%s\") = %d\n", str3, result);
+
+    // Test case 4: INT_MAX
+    result = ft_atoi(str4);
+    printf("ft_atoi(\"%s\") = %d (INT_MAX is %d)\n", str4, result, INT_MAX);
+
+    // Test case 5: INT_MIN
+    result = ft_atoi(str5);
+    printf("ft_atoi(\"%s\") = %d (INT_MIN is %d)\n", str5, result, INT_MIN);
+
+    // Test case 6: Overflow (greater than INT_MAX)
+    result = ft_atoi(str6);
+    printf("ft_atoi(\"%s\") = %d (should handle overflow)\n", str6, result);
+
+    // Test case 7: Underflow (less than INT_MIN)
+    result = ft_atoi(str7);
+    printf("ft_atoi(\"%s\") = %d (should handle underflow)\n", str7, result);
+
+    // Test case 8: Positive number with explicit '+'
+    result = ft_atoi(str8);
+    printf("ft_atoi(\"%s\") = %d\n", str8, result);
+
+    // Test case 9: Leading spaces and multiple zeros
+    result = ft_atoi(str9);
+    printf("ft_atoi(\"%s\") = %d\n", str9, result);
+
+    // For comparison, let's use the standard atoi
+    printf("\nComparing with atoi:\n");
+
+    printf("atoi(\"%s\") = %d\n", str1, atoi(str1));
+    printf("atoi(\"%s\") = %d\n", str2, atoi(str2));
+    printf("atoi(\"%s\") = %d\n", str3, atoi(str3));
+    printf("atoi(\"%s\") = %d (INT_MAX is %d)\n", str4, atoi(str4), INT_MAX);
+    printf("atoi(\"%s\") = %d (INT_MIN is %d)\n", str5, atoi(str5), INT_MIN);
+    printf("atoi(\"%s\") = %d (should handle overflow)\n", str6, atoi(str6));
+    printf("atoi(\"%s\") = %d (should handle underflow)\n", str7, atoi(str7));
+    printf("atoi(\"%s\") = %d\n", str8, atoi(str8));
+    printf("atoi(\"%s\") = %d\n", str9, atoi(str9));
+}
+
+void test_calloc(void)
+{
+    int *arr1;
+    int *arr2;
+    size_t count = 5;
+    size_t size = sizeof(int);
+
+    // Test case 1: Using ft_calloc
+    arr1 = (int *)ft_calloc(count, size);
+    if (arr1 != NULL) {
+        printf("ft_calloc allocated memory: ");
+        for (size_t i = 0; i < count; i++) {
+            printf("%d ", arr1[i]);  // Should print all zeros
+        }
+        printf("\n");
+        free(arr1);  // Always free allocated memory after use
+    } else {
+        printf("ft_calloc failed to allocate memory.\n");
+    }
+
+    // Test case 2: Using standard calloc for comparison
+    arr2 = (int *)calloc(count, size);
+    if (arr2 != NULL) {
+        printf("calloc allocated memory: ");
+        for (size_t i = 0; i < count; i++) {
+            printf("%d ", arr2[i]);  // Should also print all zeros
+        }
+        printf("\n");
+        free(arr2);  // Free the memory after use
+    } else {
+        printf("calloc failed to allocate memory.\n");
+    }
+}
+
+void test_strdup(void) {
+    const char *str1 = "Hello, 42!";
+    const char *str2 = "";
+    const char *str3 = "A longer string for testing ft_strdup.";
+    char *dup1, *dup2, *dup3;
+
+    // Test case 1: Duplicate a simple string
+    dup1 = ft_strdup(str1);
+    if (dup1 != NULL) {
+        printf("Original: \"%s\"\n", str1);
+        printf("ft_strdup: \"%s\"\n", dup1);
+        free(dup1);  // Free the duplicated string
+    } else {
+        printf("ft_strdup failed to duplicate \"%s\"\n", str1);
+    }
+
+    // Test case 2: Duplicate an empty string
+    dup2 = ft_strdup(str2);
+    if (dup2 != NULL) {
+        printf("Original: \"%s\"\n", str2);
+        printf("ft_strdup: \"%s\"\n", dup2);
+        free(dup2);  // Free the duplicated string
+    } else {
+        printf("ft_strdup failed to duplicate an empty string.\n");
+    }
+
+    // Test case 3: Duplicate a longer string
+    dup3 = ft_strdup(str3);
+    if (dup3 != NULL) {
+        printf("Original: \"%s\"\n", str3);
+        printf("ft_strdup: \"%s\"\n", dup3);
+        free(dup3);  // Free the duplicated string
+    } else {
+        printf("ft_strdup failed to duplicate \"%s\"\n", str3);
+    }
+
+    // Comparison with standard strdup:
+    printf("\nComparing with strdup:\n");
+
+    char *dup_std = strdup(str1);
+    printf("strdup: \"%s\"\n", dup_std);
+    free(dup_std);
 }

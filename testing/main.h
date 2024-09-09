@@ -6,12 +6,14 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:47:02 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/09 21:00:35 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/09 21:33:59 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <limits.h>
 
 void test_isalpha(void);
 void test_isdigit(void);
@@ -33,3 +35,6 @@ void test_strlcat(void);
 void test_memchr(void);
 void test_memcmp(void);
 void test_strnstr(void);
+void test_atoi(void);
+void test_calloc(void);
+void test_strdup(void);
