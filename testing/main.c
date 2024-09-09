@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:39:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/09 15:30:25 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/09 21:02:01 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	main(void)
 	test_strlcpy();
 	test_strlcat();
 	test_memchr();
+	test_memcmp();
+	test_strnstr(); 
 	
     return (0);
 }
@@ -310,4 +312,120 @@ void test_memchr(void)
         printf("memchr found 'z' at position: %ld\n", result - s);
     else
         printf("memchr did not find 'z'\n");
+}
+
+void test_memcmp(void) {
+    const char s1[] = "Hello, 42 Prague!";
+    const char s2[] = "Hello, 42 Paris!";
+    int result;
+
+    size_t s1_len = strlen(s1); // Get the length of s1 (without null terminator)
+    size_t s2_len = strlen(s2); // Get the length of s2 (without null terminator)
+    size_t min_len = s1_len < s2_len ? s1_len : s2_len; // Find the smaller length
+
+    // Test ft_memcmp: strings differ at byte 11
+    result = ft_memcmp(s1, s2, min_len);  // Compare only up to the smaller length
+    if (result == 0)
+        printf("ft_memcmp: s1 and s2 are identical.\n");
+    else
+        printf("ft_memcmp: s1 and s2 differ at result = %d\n", result);
+
+    // Test ft_memcmp: comparing the same string
+    result = ft_memcmp(s1, s1, s1_len);  // Compare s1 with itself
+    if (result == 0)
+        printf("ft_memcmp: s1 and s1 are identical.\n");
+    else
+        printf("ft_memcmp: s1 and s1 differ at result = %d\n", result);
+
+    // Test original memcmp for comparison
+    result = memcmp(s1, s2, min_len);  // Compare only up to the smaller length
+    if (result == 0)
+        printf("memcmp: s1 and s2 are identical.\n");
+    else
+        printf("memcmp: s1 and s2 differ at result = %d\n", result);
+
+	// Test memcmp: comparing the same string
+    result = memcmp(s1, s1, s1_len);  // Compare s1 with itself
+    if (result == 0)
+        printf("memcmp: s1 and s1 are identical.\n");
+    else
+        printf("memcmp: s1 and s1 differ at result = %d\n", result);
+}
+
+void test_strnstr(void) {
+    const char haystack1[] = "Foo Bar";
+    const char needle1[] = "Bar";
+    const char needle2[] = "Foo";
+    const char haystack2[] = "Hello World";
+    const char needle3[] = "World";
+    const char needle4[] = "";
+    char *result;
+
+    // Test case 1: Search for "Bar" within 7 characters of "Foo Bar"
+    result = ft_strnstr(haystack1, needle1, 7);
+    if (result != NULL)
+        printf("ft_strnstr found '%s' in '%s' within len=7: %s\n", needle1, haystack1, result);
+    else
+        printf("ft_strnstr did not find '%s' in '%s' within len=7\n", needle1, haystack1);
+
+    // Test case 2: Search for "Bar" within 6 characters of "Foo Bar"
+    result = ft_strnstr(haystack1, needle1, 6);
+    if (result != NULL)
+        printf("ft_strnstr found '%s' in '%s' within len=6: %s\n", needle1, haystack1, result);
+    else
+        printf("ft_strnstr did not find '%s' in '%s' within len=6\n", needle1, haystack1);
+
+    // Test case 3: Search for "Foo" within 3 characters of "Foo Bar"
+    result = ft_strnstr(haystack1, needle2, 3);
+    if (result != NULL)
+        printf("ft_strnstr found '%s' in '%s' within len=3: %s\n", needle2, haystack1, result);
+    else
+        printf("ft_strnstr did not find '%s' in '%s' within len=3\n", needle2, haystack1);
+
+    // Test case 4: Search for "World" within 5 characters of "Hello World"
+    result = ft_strnstr(haystack2, needle3, 5);
+    if (result != NULL)
+        printf("ft_strnstr found '%s' in '%s' within len=5: %s\n", needle3, haystack2, result);
+    else
+        printf("ft_strnstr did not find '%s' in '%s' within len=5\n", needle3, haystack2);
+
+    // Test case 5: Search for a non-existent substring "Test" within "Foo Bar"
+    result = ft_strnstr(haystack1, needle4, 7);
+    if (result != NULL)
+        printf("ft_strnstr found '%s' in '%s' within len=7: %s\n", needle4, haystack1, result);
+    else
+        printf("ft_strnstr did not find '%s' in '%s' within len=7\n", needle4, haystack1);
+
+    // For comparison, let's use the standard strnstr
+    printf("\nComparing with strnstr:\n");
+
+    result = strnstr(haystack1, needle1, 7);
+    if (result != NULL)
+        printf("strnstr found '%s' in '%s' within len=7: %s\n", needle1, haystack1, result);
+    else
+        printf("strnstr did not find '%s' in '%s' within len=7\n", needle1, haystack1);
+
+    result = strnstr(haystack1, needle1, 6);
+    if (result != NULL)
+        printf("strnstr found '%s' in '%s' within len=6: %s\n", needle1, haystack1, result);
+    else
+        printf("strnstr did not find '%s' in '%s' within len=6\n", needle1, haystack1);
+
+    result = strnstr(haystack1, needle2, 3);
+    if (result != NULL)
+        printf("strnstr found '%s' in '%s' within len=3: %s\n", needle2, haystack1, result);
+    else
+        printf("strnstr did not find '%s' in '%s' within len=3\n", needle2, haystack1);
+
+    result = strnstr(haystack2, needle3, 5);
+    if (result != NULL)
+        printf("strnstr found '%s' in '%s' within len=5: %s\n", needle3, haystack2, result);
+    else
+        printf("strnstr did not find '%s' in '%s' within len=5\n", needle3, haystack2);
+
+    result = strnstr(haystack1, needle4, 7);
+    if (result != NULL)
+        printf("strnstr found '%s' in '%s' within len=7: %s\n", needle4, haystack1, result);
+    else
+        printf("strnstr did not find '%s' in '%s' within len=7\n", needle4, haystack1);
 }

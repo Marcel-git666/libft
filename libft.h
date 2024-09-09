@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 18:32:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/09 14:58:12 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/09 20:54:51 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ void    *ft_memmove(void *dst, const void *src, size_t len);
 size_t	ft_strlcpy(char * restrict dst, const char * restrict src, size_t dstsize);
 size_t	ft_strlcat(char * restrict dst, const char * restrict src, size_t dstsize);
 void    *ft_memchr(const void *s, int c, size_t n);
+int     ft_memcmp(const void *s1, const void *s2, size_t n);
+char    *ft_strnstr(const char *haystack, const char *needle, size_t len);
 
 #endif

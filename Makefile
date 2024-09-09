@@ -6,7 +6,7 @@
 #    By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 22:02:38 by mmravec           #+#    #+#              #
-#    Updated: 2024/09/09 15:14:46 by mmravec          ###   ########.fr        #
+#    Updated: 2024/09/09 20:55:04 by mmravec          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Werror -Wextra
 SRCS = ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \
        ft_strlen.c ft_toupper.c ft_tolower.c ft_strchr.c ft_strrchr.c \
 	   ft_strncmp.c ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c \
-	   ft_strlcpy.c ft_strlcat.c ft_memchr.c
+	   ft_strlcpy.c ft_strlcat.c ft_memchr.c ft_memcmp.c ft_strnstr.c
 OBJS = $(SRCS:.c=.o)      # Object files corresponding to .c files
 
 # Rule to create the static library
