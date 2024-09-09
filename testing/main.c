@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:39:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/09 12:32:43 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/09 13:16:55 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(void)
 	test_memset();
 	test_bzero();
 	test_memcpy();
+	test_memmove();
 
     return (0);
 }
@@ -194,4 +195,18 @@ void test_memcpy(void)
    	memcpy(dest, src, strlen(src) + 1);
    	printf("After memcpy dest = %s\n", dest);
 
+}
+
+void test_memmove(void)
+{
+const char src[50] = "42 Prague";
+   	char dest[50];
+   	strcpy(dest,"Heloooo!!");
+   	printf("Before ft_memmove dest = %s\n", dest);
+   	ft_memmove(dest, src, 3);
+   	printf("After ft_memmove dest = %s\n", dest);
+	strcpy(dest,"Heloooo!!");
+   	printf("Before memmove dest = %s\n", dest);
+   	memmove(dest, src, 3);
+   	printf("After memmove dest = %s\n", dest);
 }

@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:47:02 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/09 12:29:26 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/09 13:14:35 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,3 +27,4 @@ void test_strncmp(void);
 void test_memset(void);
 void test_bzero(void);
 void test_memcpy(void);
+void test_memmove(void);
