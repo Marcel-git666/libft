@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:39:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/09 14:48:03 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/09 15:30:25 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	main(void)
 	test_memmove();
 	test_strlcpy();
 	test_strlcat();
-	 
+	test_memchr();
+	
     return (0);
 }
 
@@ -276,4 +277,37 @@ void test_strlcat(void) {
 
     n = strlcat(dest, src, 10);  // Append but with limited space
     printf("After strlcat (size 10) dest = %s, return value = %zu\n", dest, n);
+}
+
+
+void test_memchr(void)
+{
+    const char s[] = "Hello, 42 Prague!";
+    char *result;
+
+    // Test ft_memchr
+    result = ft_memchr(s, '4', sizeof(s));
+    if (result != NULL)
+        printf("ft_memchr found '4' at position: %ld\n", result - s);
+    else
+        printf("ft_memchr did not find '4'\n");
+
+    result = ft_memchr(s, 'z', sizeof(s));
+    if (result != NULL)
+        printf("ft_memchr found 'z' at position: %ld\n", result - s);
+    else
+        printf("ft_memchr did not find 'z'\n");
+
+    // Test original memchr
+    result = memchr(s, '4', sizeof(s));
+    if (result != NULL)
+        printf("memchr found '4' at position: %ld\n", result - s);
+    else
+        printf("memchr did not find '4'\n");
+
+    result = memchr(s, 'z', sizeof(s));
+    if (result != NULL)
+        printf("memchr found 'z' at position: %ld\n", result - s);
+    else
+        printf("memchr did not find 'z'\n");
 }
