@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:39:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/10 21:08:28 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/10 21:31:00 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	main(void)
 	test_strjoin();
 	test_strtrim();
 	test_split();
+	test_itoa();
+
 	
     return (0);
 }
@@ -800,106 +802,211 @@ void test_split(void) {
     printf(COLOR_BLUE "====== Test ft_split ======\n" COLOR_RESET);
 
     // Test 1
-    char **result1 = ft_split("Hello World", ' ');
-    char *expected1[] = {"Hello", "World", NULL};
-    int passed1 = 1;
-    for (int i = 0; expected1[i] != NULL; i++) {
+    char **result1 = ft_split("start-middle-end", '-');
+    char *expected1[] = {"start", "middle", "end", NULL};
+    int i = 0;
+    int pass = 1;
+
+    while (expected1[i]) {
         if (result1[i] == NULL || strcmp(result1[i], expected1[i]) != 0) {
-            passed1 = 0;
+            pass = 0;
             break;
         }
+        i++;
     }
-    if (passed1 && result1[2] == NULL) {
+    if (pass && result1[i] == NULL) {
         printf(COLOR_GREEN "Test 1 passed\n" COLOR_RESET);
     } else {
         printf(COLOR_RED "Test 1 failed\n" COLOR_RESET);
-        for (int i = 0; expected1[i] != NULL; i++) {
-            printf("Expected: '%s', Got: '%s'\n", expected1[i], result1[i] ? result1[i] : "NULL");
-        }
     }
-    for (int i = 0; result1[i] != NULL; i++) {
-        free(result1[i]);
-    }
+    // Free result1 and individual strings
+    i = 0;
+    while (result1[i]) free(result1[i++]);
     free(result1);
 
     // Test 2
-    char **result2 = ft_split("One,Two,Three", ',');
-    char *expected2[] = {"One", "Two", "Three", NULL};
-    int passed2 = 1;
-    for (int i = 0; expected2[i] != NULL; i++) {
+    char **result2 = ft_split("foo-bar-baz", '-');
+    char *expected2[] = {"foo", "bar", "baz", NULL};
+    i = 0;
+    pass = 1;
+
+    while (expected2[i]) {
         if (result2[i] == NULL || strcmp(result2[i], expected2[i]) != 0) {
-            passed2 = 0;
+            pass = 0;
             break;
         }
+        i++;
     }
-    if (passed2 && result2[3] == NULL) {
+    if (pass && result2[i] == NULL) {
         printf(COLOR_GREEN "Test 2 passed\n" COLOR_RESET);
     } else {
         printf(COLOR_RED "Test 2 failed\n" COLOR_RESET);
-        for (int i = 0; expected2[i] != NULL; i++) {
-            printf("Expected: '%s', Got: '%s'\n", expected2[i], result2[i] ? result2[i] : "NULL");
-        }
     }
-    for (int i = 0; result2[i] != NULL; i++) {
-        free(result2[i]);
-    }
+    // Free result2 and individual strings
+    i = 0;
+    while (result2[i]) free(result2[i++]);
     free(result2);
 
-    // Test 3: Empty string
-    char **result3 = ft_split("", ' ');
-    //char *expected3[] = {NULL};
-    int passed3 = (result3[0] == NULL);
-    if (passed3) {
+    // Test 3
+    char **result3 = ft_split("apple,,orange,,banana,", ',');
+    char *expected3[] = {"apple", "orange", "banana", NULL};
+    i = 0;
+    pass = 1;
+
+    while (expected3[i]) {
+        if (result3[i] == NULL || strcmp(result3[i], expected3[i]) != 0) {
+            pass = 0;
+            break;
+        }
+        i++;
+    }
+    if (pass && result3[i] == NULL) {
         printf(COLOR_GREEN "Test 3 passed\n" COLOR_RESET);
     } else {
         printf(COLOR_RED "Test 3 failed\n" COLOR_RESET);
-        printf("Expected: 'NULL', Got: '%s'\n", result3[0] ? result3[0] : "NULL");
     }
+    // Free result3 and individual strings
+    i = 0;
+    while (result3[i]) free(result3[i++]);
     free(result3);
 
-    // Test 4: Multiple delimiters
-    char **result4 = ft_split("Split,,,this,test", ',');
-    char *expected4[] = {"Split", "this", "test", NULL};
-    int passed4 = 1;
-    for (int i = 0; expected4[i] != NULL; i++) {
+    // Test 4
+    char **result4 = ft_split(",,,", ',');
+    char *expected4[] = {NULL};
+    i = 0;
+    pass = 1;
+
+    while (expected4[i]) {
         if (result4[i] == NULL || strcmp(result4[i], expected4[i]) != 0) {
-            passed4 = 0;
+            pass = 0;
             break;
         }
+        i++;
     }
-    if (passed4 && result4[3] == NULL) {
+    if (pass && result4[i] == NULL) {
         printf(COLOR_GREEN "Test 4 passed\n" COLOR_RESET);
     } else {
         printf(COLOR_RED "Test 4 failed\n" COLOR_RESET);
-        for (int i = 0; expected4[i] != NULL; i++) {
-            printf("Expected: '%s', Got: '%s'\n", expected4[i], result4[i] ? result4[i] : "NULL");
-        }
     }
-    for (int i = 0; result4[i] != NULL; i++) {
-        free(result4[i]);
-    }
+    // Free result4 and individual strings
+    i = 0;
+    while (result4[i]) free(result4[i++]);
     free(result4);
 
-    // Test 5: Delimiter at the start and end
+    // Test 5
     char **result5 = ft_split(",start-middle-end,", ',');
     char *expected5[] = {"start-middle-end", NULL};
-    int passed5 = 1;
-    for (int i = 0; expected5[i] != NULL; i++) {
+    i = 0;
+    pass = 1;
+
+    while (expected5[i]) {
         if (result5[i] == NULL || strcmp(result5[i], expected5[i]) != 0) {
-            passed5 = 0;
+            pass = 0;
             break;
         }
+        i++;
     }
-    if (passed5 && result5[3] == NULL) {
+    if (pass && result5[i] == NULL) {
         printf(COLOR_GREEN "Test 5 passed\n" COLOR_RESET);
     } else {
         printf(COLOR_RED "Test 5 failed\n" COLOR_RESET);
-        for (int i = 0; expected5[i] != NULL; i++) {
-            printf("Expected: '%s', Got: '%s'\n", expected5[i], result5[i] ? result5[i] : "NULL");
-        }
     }
-    for (int i = 0; result5[i] != NULL; i++) {
-        free(result5[i]);
+    // Free result5 and individual strings
+    i = 0;
+    while (result5[i]) free(result5[i++]);
+    free(result5);
+}
+
+void test_itoa(void)
+{
+    printf(COLOR_BLUE "====== Test ft_itoa ======\n" COLOR_RESET);
+
+    // Test 1: Zero
+    int num1 = 0;
+    char *result1 = ft_itoa(num1);
+    char *expected1 = "0";
+    if (strcmp(result1, expected1) == 0) {
+        printf(COLOR_GREEN "Test 1 passed\n" COLOR_RESET);
+    } else {
+        printf(COLOR_RED "Test 1 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected1, result1);
+    }
+    free(result1);
+
+    // Test 2: Positive number
+    int num2 = 1234;
+    char *result2 = ft_itoa(num2);
+    char *expected2 = "1234";
+    if (strcmp(result2, expected2) == 0) {
+        printf(COLOR_GREEN "Test 2 passed\n" COLOR_RESET);
+    } else {
+        printf(COLOR_RED "Test 2 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected2, result2);
+    }
+    free(result2);
+
+    // Test 3: Negative number
+    int num3 = -1234;
+    char *result3 = ft_itoa(num3);
+    char *expected3 = "-1234";
+    if (strcmp(result3, expected3) == 0) {
+        printf(COLOR_GREEN "Test 3 passed\n" COLOR_RESET);
+    } else {
+        printf(COLOR_RED "Test 3 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected3, result3);
+    }
+    free(result3);
+
+    // Test 4: INT_MAX
+    int num4 = INT_MAX;
+    char *result4 = ft_itoa(num4);
+    char *expected4 = "2147483647";
+    if (strcmp(result4, expected4) == 0) {
+        printf(COLOR_GREEN "Test 4 passed\n" COLOR_RESET);
+    } else {
+        printf(COLOR_RED "Test 4 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected4, result4);
+    }
+    free(result4);
+
+    // Test 5: INT_MIN
+    int num5 = INT_MIN;
+    char *result5 = ft_itoa(num5);
+    // Expected result is typically "-2147483648"
+    char *expected5 = "-2147483648";
+    if (strcmp(result5, expected5) == 0) {
+        printf(COLOR_GREEN "Test 5 passed\n" COLOR_RESET);
+    } else {
+        printf(COLOR_RED "Test 5 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected5, result5);
     }
     free(result5);
+
+    // Test 6: Edge case negative number with a single digit
+    int num6 = -1;
+    char *result6 = ft_itoa(num6);
+    char *expected6 = "-1";
+    if (strcmp(result6, expected6) == 0) {
+        printf(COLOR_GREEN "Test 6 passed\n" COLOR_RESET);
+    } else {
+        printf(COLOR_RED "Test 6 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected6, result6);
+    }
+    free(result6);
+
+    // Test 7: Edge case positive number with a single digit
+    int num7 = 1;
+    char *result7 = ft_itoa(num7);
+    char *expected7 = "1";
+    if (strcmp(result7, expected7) == 0) {
+        printf(COLOR_GREEN "Test 7 passed\n" COLOR_RESET);
+    } else {
+        printf(COLOR_RED "Test 7 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected7, result7);
+    }
+    free(result7);
+
+    // Test 8: Large number with many digits
+    int num8 = 987654321;
+    char *result8 = ft_itoa(num8);
+    char *expected8 = "987654321";
+    if (strcmp(result8, expected8) == 0) {
+        printf(COLOR_GREEN "Test 8 passed\n" COLOR_RESET);
+    } else {
+        printf(COLOR_RED "Test 8 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected8, result8);
+    }
+    free(result8);
 }

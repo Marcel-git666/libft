@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:47:02 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/10 20:54:07 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/10 21:27:03 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ void test_substr(void);
 void test_strjoin(void);
 void test_strtrim(void);
 void test_split(void);
+void test_itoa(void);
 
 #endif
