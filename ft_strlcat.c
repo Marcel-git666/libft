@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 18:55:40 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/09 14:46:12 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/10 20:54:27 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,11 @@ size_t	ft_strlcat(char * restrict dst, const char * restrict src,
 	{
 		return (dstsize + len_src);
 	}
-	while (src[i] != '\0' && len_dst + i < dstsize -1)
+	while (src[i] != '\0' && (len_dst + i) < (dstsize - 1))
 	{
 		dst[len_dst + i] = src[i];
 		i++;
 	}
-	if (len_dst + i < dstsize)
-		dst[len_dst + i] = '\0';
+	dst[len_dst + i] = '\0';
 	return (len_dst + len_src);
 }

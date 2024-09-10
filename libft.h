@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 18:32:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/10 10:36:48 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/10 20:54:59 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,7 @@ void    *ft_calloc(size_t count, size_t size);
 char	*ft_strdup(const char *s1);
 char    *ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
+char    *ft_strtrim(char const *s1, char const *set);
+char	**ft_split(char const *s, char c);
 
 #endif

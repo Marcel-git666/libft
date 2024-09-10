@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:46:11 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/09 20:58:42 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/10 20:54:29 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char    *ft_strnstr(const char *haystack, const char *needle, size_t len)
 	i = 0;
 	len_str = ft_strlen(haystack);
 	len_to_find = ft_strlen(needle);
-	while (haystack[i] != '\0' && (len_str - i >= len_to_find) && (i < len - len_to_find))
+	while (haystack[i] != '\0' && (len_str - i >= len_to_find) && (i <= len - len_to_find))
 	{
 		if (haystack[i] == needle[0])
 		{

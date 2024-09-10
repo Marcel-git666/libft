@@ -6,7 +6,7 @@
 #    By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 21:40:51 by mmravec           #+#    #+#              #
-#    Updated: 2024/09/03 22:46:43 by mmravec          ###   ########.fr        #
+#    Updated: 2024/09/10 17:11:33 by mmravec          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBFT_PATH = ../
 LIBFT = $(LIBFT_PATH)libft.a
 
 # Source files
-SRCS = main.c
+SRCS = main.c utils.c
 OBJS = $(SRCS:.c=.o)
 
 # Target to create the test executable
