@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:39:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/09 21:35:41 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/10 10:54:00 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	main(void)
 	printf("\n\n===============================\n");
 	printf(    "=========== PART 2 ============\n");
 	printf(    "===============================\n");
+	test_substr();
+	test_strjoin();
 	
     return (0);
 }
@@ -575,4 +577,64 @@ void test_strdup(void) {
     char *dup_std = strdup(str1);
     printf("strdup: \"%s\"\n", dup_std);
     free(dup_std);
+}
+
+// PART 2
+void test_substr(void) {
+    char *substr;
+    const char *str1 = "Hello, 42 Prague!";
+    const char *str2 = "";
+    
+    // Edge Case 1: Empty string
+    substr = ft_substr(str2, 0, 5);
+    printf("Original: \"%s\"\n", str2);
+    printf("ft_substr: \"%s\" (start=0, len=5)\n", substr);  // Should print an empty string
+    free(substr);
+
+    // Edge Case 2: Start index beyond string length
+    substr = ft_substr(str1, 100, 5);
+    printf("Original: \"%s\"\n", str1);
+    printf("ft_substr: \"%s\" (start=100, len=5)\n", substr);  // Should print an empty string
+    free(substr);
+
+    // Edge Case 3: Substring length greater than remaining characters
+    substr = ft_substr(str1, 7, 50);
+    printf("Original: \"%s\"\n", str1);
+    printf("ft_substr: \"%s\" (start=7, len=50)\n", substr);  // Should print "42 Prague!"
+    free(substr);
+
+    // Edge Case 4: Null pointer (if you want to handle it, otherwise can omit)
+    // substr = ft_substr(NULL, 0, 5); // Uncomment if you want to test this case
+    // printf("ft_substr(NULL): \"%s\"\n", substr);  // Should not crash, but ideally handle NULL case safely
+
+    // Edge Case 5: Zero length
+    substr = ft_substr(str1, 5, 0);
+    printf("Original: \"%s\"\n", str1);
+    printf("ft_substr: \"%s\" (start=5, len=0)\n", substr);  // Should return an empty string
+    free(substr);
+
+    // Additional Test: Normal case
+    substr = ft_substr(str1, 9, 9);
+    printf("Original: \"%s\"\n", str1);
+    printf("ft_substr: \"%s\" (start=7, len=9)\n", substr);  // Should print "42 Prague"
+    free(substr);
+}
+
+void test_strjoin(void)
+{
+	const char *str1 = "Hello, ";
+    const char *str2 = "world!";
+    char *result = ft_strjoin(str1, str2);
+    printf("Concatenated string: %s\n", result);
+    free(result);
+
+    // Test with an empty string
+    const char *empty = "";
+    result = ft_strjoin(empty, str2);
+    printf("Concatenated with empty s1: %s\n", result);
+    free(result);
+
+    result = ft_strjoin(str1, empty);
+    printf("Concatenated with empty s2: %s\n", result);
+    free(result);
 }

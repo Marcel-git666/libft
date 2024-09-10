@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:47:02 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/09 21:33:59 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/10 10:53:57 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,3 +38,5 @@ void test_strnstr(void);
 void test_atoi(void);
 void test_calloc(void);
 void test_strdup(void);
+void test_substr(void);
+void test_strjoin(void);
