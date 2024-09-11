@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:39:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/10 21:31:00 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/11 15:56:37 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,11 @@ int	main(void)
 	test_strtrim();
 	test_split();
 	test_itoa();
+	test_strmapi();
+    test_striteri();
+    test_putchar_fd();
+    test_putstr_fd();
 
-	
     return (0);
 }
 
@@ -113,9 +116,9 @@ void test_tolower(void) {
 void test_strchr(void) {
     char c = '.';
     char *s = "Three Rings for the Elven-kings under the sky...";
-    
+
     printf(COLOR_BLUE "====== Test ft_strchr ======\n" COLOR_RESET);
-    
+
     // Compare the result of ft_strchr with standard strchr
     assert_str_equal(ft_strchr(s, c), strchr(s, c), "Looking for first occurrence of '.'");
 }
@@ -123,20 +126,20 @@ void test_strchr(void) {
 void test_strrchr(void) {
     char c = 'L';
     char *s = "The Dark Lord in the Land of Mordor.";
-    
+
     printf(COLOR_BLUE "====== Test ft_strrchr ======\n" COLOR_RESET);
 
     // Get results from ft_strrchr and strrchr
     char *result_ft = ft_strrchr(s, c);
     char *result_std = strrchr(s, c);
-    
+
     // Check if either result is NULL before passing to assert_str_equal
     if (result_ft == NULL || result_std == NULL) {
         if (result_ft == result_std) {
             printf(COLOR_GREEN "PASS: " COLOR_RESET "Both functions returned NULL\n");
         } else {
             printf(COLOR_RED "FAIL: " COLOR_RESET "ft_strrchr returned %s, but strrchr returned %s\n",
-                   result_ft == NULL ? "NULL" : result_ft, 
+                   result_ft == NULL ? "NULL" : result_ft,
                    result_std == NULL ? "NULL" : result_std);
         }
     } else {
@@ -152,11 +155,11 @@ void test_strncmp(void) {
     int n = 21;
 
     printf(COLOR_BLUE "====== Test ft_strncmp ======\n" COLOR_RESET);
-    
+
     // Get results from ft_strncmp and standard strncmp
     int result_ft = ft_strncmp(s1, s2, n);
     int result_std = strncmp(s1, s2, n);
-    
+
     // Use assert_int_equal to compare the two results
     if (result_ft == result_std) {
         printf(COLOR_GREEN "PASS: " COLOR_RESET "Comparing first %d chars of s1 and s2\n", n);
@@ -678,7 +681,7 @@ void test_substr(void) {
     char *substr;
     const char *str1 = "Hello, 42 Prague!";
     const char *str2 = "";
-    
+
     printf(COLOR_BLUE "====== Test ft_substr ======\n" COLOR_RESET);
 
     // Edge Case 1: Empty string
@@ -1010,3 +1013,183 @@ void test_itoa(void)
     }
     free(result8);
 }
+
+char to_uppercase(unsigned int index, char c) {
+    if (c >= 'a' && c <= 'z' && (index % 2 == 0)) {
+        return c - 32;
+    }
+    return c;
+}
+
+// Sample function to apply: shifts each character by index
+char shift_by_index(unsigned int index, char c) {
+    return c + index;
+}
+
+void test_strmapi(void) {
+    printf(COLOR_BLUE "====== Test ft_strmapi ======\n" COLOR_RESET);
+
+    // Test 1: Uppercase transformation
+    const char *str1 = "hello world";
+    char *result1 = ft_strmapi(str1, to_uppercase);
+    const char *expected1 = "HeLlO WoRlD";
+    if (strcmp(result1, expected1) == 0) {
+        printf(COLOR_GREEN "Test 1 passed\n" COLOR_RESET);
+    } else {
+        printf(COLOR_RED "Test 1 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected1, result1);
+    }
+    free(result1);
+
+    // Test 2: Shift characters by their index
+    const char *str2 = "abc";
+    char *result2 = ft_strmapi(str2, shift_by_index);
+    const char *expected2 = "ace";
+    if (strcmp(result2, expected2) == 0) {
+        printf(COLOR_GREEN "Test 2 passed\n" COLOR_RESET);
+    } else {
+        printf(COLOR_RED "Test 2 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected2, result2);
+    }
+    free(result2);
+
+    // Test 3: Empty string
+    const char *str3 = "";
+    char *result3 = ft_strmapi(str3, to_uppercase);
+    const char *expected3 = "";
+    if (strcmp(result3, expected3) == 0) {
+        printf(COLOR_GREEN "Test 3 passed\n" COLOR_RESET);
+    } else {
+        printf(COLOR_RED "Test 3 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected3, result3);
+    }
+    free(result3);
+
+    // Test 4: String with special characters
+    const char *str4 = "123abc!@#";
+    char *result4 = ft_strmapi(str4, to_uppercase);
+    const char *expected4 = "123aBc!@#";
+    if (strcmp(result4, expected4) == 0) {
+        printf(COLOR_GREEN "Test 4 passed\n" COLOR_RESET);
+    } else {
+        printf(COLOR_RED "Test 4 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected4, result4);
+    }
+    free(result4);
+
+    // Test 5: Shift characters by index with special chars
+    const char *str5 = "!@#123";
+    char *result5 = ft_strmapi(str5, shift_by_index);
+    const char *expected5 = "!A%468";
+    if (strcmp(result5, expected5) == 0) {
+        printf(COLOR_GREEN "Test 5 passed\n" COLOR_RESET);
+    } else {
+        printf(COLOR_RED "Test 5 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected5, result5);
+    }
+    free(result5);
+}
+
+void shift_char_by_index(unsigned int i, char *c)
+{
+    if (*c >= '0' && *c <= '9')  // Shift digits
+        *c = (*c - '0' + i) % 10 + '0';
+    else if (*c >= 'A' && *c <= 'Z')  // Shift uppercase letters
+        *c = (*c - 'A' + i) % 26 + 'A';
+    else if (*c >= 'a' && *c <= 'z')  // Shift lowercase letters
+        *c = (*c - 'a' + i) % 26 + 'a';
+}
+
+void test_striteri(void)
+{
+    printf(COLOR_BLUE "====== Test ft_striteri ======\n" COLOR_RESET);
+
+    // Test case 1: Apply shift to "Hello123"
+    char str1[] = "Hello123";
+    const char *expected1 = "Hfnos680"; // 'H' by 0, 'e' by 1, 'l' by 2, 'l' by 3, 'o' by 4, '1' by 5, '2' by 6, '3' by 7
+    ft_striteri(str1, shift_char_by_index);
+    if (strcmp(str1, expected1) == 0)
+        printf(COLOR_GREEN "Test 1 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 1 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected1, str1);
+
+    // Test case 2: Empty string
+    char str2[] = "";
+    const char *expected2 = "";
+    ft_striteri(str2, shift_char_by_index);
+    if (strcmp(str2, expected2) == 0)
+        printf(COLOR_GREEN "Test 2 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 2 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected2, str2);
+
+    // Test case 3: Apply shift to "abcdef"
+    char str3[] = "abcdef";
+    const char *expected3 = "acegik"; // 'a' by 0, 'b' by 1, 'c' by 2, etc.
+    ft_striteri(str3, shift_char_by_index);
+    if (strcmp(str3, expected3) == 0)
+        printf(COLOR_GREEN "Test 3 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 3 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected3, str3);
+
+    // Test case 4: Apply shift to "XYZ987"
+    char str4[] = "XYZ987";
+    const char *expected4 = "XZB222"; // 'X' by 0, 'Y' by 1, 'Z' by 2, etc.
+    ft_striteri(str4, shift_char_by_index);
+    if (strcmp(str4, expected4) == 0)
+        printf(COLOR_GREEN "Test 4 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 4 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected4, str4);
+
+    // Test case 5: Special characters "!@#123"
+    char str5[] = "!@#123";
+    const char *expected5 = "!@#468"; // Special characters unaffected, digits shifted
+    ft_striteri(str5, shift_char_by_index);
+    if (strcmp(str5, expected5) == 0)
+        printf(COLOR_GREEN "Test 5 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 5 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, expected5, str5);
+}
+void test_putchar_fd(void)
+{
+    printf(COLOR_BLUE "====== Test ft_putchar_fd ======\n" COLOR_RESET);
+
+    // Test case 1: Output character 'A' to standard output (fd = 1)
+    printf(COLOR_YELLOW "Test 1: Output 'A' to stdout:\n" COLOR_RESET);
+    ft_putchar_fd('A', 1);
+    printf(COLOR_GREEN "\nTest 1 passed\n" COLOR_RESET);
+
+    // Test case 2: Output character 'z' to standard output (fd = 1)
+    printf(COLOR_YELLOW "Test 2: Output 'z' to stdout:\n" COLOR_RESET);
+    ft_putchar_fd('z', 1);
+    printf(COLOR_GREEN "\nTest 2 passed\n" COLOR_RESET);
+
+    // Test case 3: Output newline '\n' to standard output (fd = 1)
+    printf(COLOR_YELLOW "Test 3: Output newline to stdout:\n" COLOR_RESET);
+    ft_putchar_fd('\n', 1);
+    printf(COLOR_GREEN "Test 3 passed\n" COLOR_RESET);
+
+    // Test case 4: Output special character '@' to standard output (fd = 1)
+    printf(COLOR_YELLOW "Test 4: Output '@' to stdout:\n" COLOR_RESET);
+    ft_putchar_fd('@', 1);
+    printf(COLOR_GREEN "\nTest 4 passed\n" COLOR_RESET);
+
+    // Test case 5: Output 'X' to a file (fd = 2 for stderr as a simple example)
+    printf(COLOR_YELLOW "Test 5: Output 'X' to stderr:\n" COLOR_RESET);
+    ft_putchar_fd('X', 2); // Redirect output to stderr for testing
+    printf(COLOR_GREEN "\nTest 5 passed\n" COLOR_RESET);
+}
+void test_putstr_fd(void)
+{
+    printf(COLOR_BLUE "====== Test ft_putstr_fd ======\n" COLOR_RESET);
+
+    // Test case 1: Output a simple string to standard output (fd = 1)
+    printf(COLOR_YELLOW "Test 1: Output 'Hello World' to stdout:\n" COLOR_RESET);
+    ft_putstr_fd("Hello World", 1);
+    printf(COLOR_GREEN "\nTest 1 passed\n" COLOR_RESET);
+
+    // Test case 2: Output an empty string to standard output
+    printf(COLOR_YELLOW "Test 2: Output an empty string to stdout:\n" COLOR_RESET);
+    ft_putstr_fd("", 1);
+    printf(COLOR_GREEN "\nTest 2 passed\n" COLOR_RESET);
+
+    // Test case 3: Output a string with special characters
+    printf(COLOR_YELLOW "Test 3: Output 'Special chars: !@#$%%^&*()' to stdout:\n" COLOR_RESET);
+    ft_putstr_fd("Special chars: !@#$%%^&*()", 1);
+    printf(COLOR_GREEN "\nTest 3 passed\n" COLOR_RESET);
+}
+

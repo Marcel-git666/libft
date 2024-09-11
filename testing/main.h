@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:47:02 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/10 21:27:03 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/11 15:51:25 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #define COLOR_RED "\033[0;31m"
 #define COLOR_BLUE "\033[0;34m"
 #define COLOR_RESET "\033[0m"
+#define COLOR_YELLOW "\x1b[33m"
 
 void test_isalpha(void);
 void test_isdigit(void);
@@ -52,5 +53,9 @@ void test_strjoin(void);
 void test_strtrim(void);
 void test_split(void);
 void test_itoa(void);
+void test_strmapi(void);
+void test_striteri(void);
+void test_putchar_fd(void);
+void test_putstr_fd(void);
 
 #endif
