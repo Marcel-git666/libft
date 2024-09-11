@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:47:02 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/11 17:42:48 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/11 21:10:12 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,11 @@ void test_putchar_fd(void);
 void test_putstr_fd(void);
 void test_putendl_fd(void);
 void test_putnbr_fd(void);
+
+// ============= Bonus =============
+
+void test_lstnew(void);
+void test_lstadd_front(void);
+
 
 #endif

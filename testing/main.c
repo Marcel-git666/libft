@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:39:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/11 17:43:03 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/11 21:44:58 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,12 @@ int	main(void)
     test_putstr_fd();
     test_putendl_fd();
     test_putnbr_fd();
+    printf("\n\n===============================\n");
+	printf(    "=========== BONUS =============\n");
+	printf(    "===============================\n");
+    test_lstnew();
+    test_lstadd_front();
+
 
     return (0);
 }
@@ -1346,4 +1352,100 @@ void test_putnbr_fd(void)
 
     // Optionally, remove the test file if you don't need it afterward
     remove("test_output.txt");
+}
+// ===============================
+// ========== BONUS ==============
+// ===============================
+
+void test_lstnew(void)
+{
+    printf(COLOR_BLUE "====== Test ft_lstnew ======\n" COLOR_RESET);
+
+    // Test case 1: Creating a new node with a simple string as content
+    printf(COLOR_YELLOW "Test 1: Creating a new node with 'Hello World' as content\n" COLOR_RESET);
+    char *content1 = "Hello World";
+    t_list *node1 = ft_lstnew(content1);
+    if (node1 && node1->content == content1 && node1->next == NULL)
+        printf(COLOR_GREEN "Test 1 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 1 failed. Expected content: '%s', Got: '%s'\n" COLOR_RESET, content1, (char *)node1->content);
+
+    // Test case 2: Creating a new node with NULL as content
+    printf(COLOR_YELLOW "Test 2: Creating a new node with NULL as content\n" COLOR_RESET);
+    t_list *node2 = ft_lstnew(NULL);
+    if (node2 && node2->content == NULL && node2->next == NULL)
+        printf(COLOR_GREEN "Test 2 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 2 failed. Expected content: NULL, Got: %p\n" COLOR_RESET, node2->content);
+
+    // Test case 3: Creating a new node with an integer as content
+    printf(COLOR_YELLOW "Test 3: Creating a new node with an integer (42) as content\n" COLOR_RESET);
+    int content3 = 42;
+    t_list *node3 = ft_lstnew(&content3);
+    if (node3 && *((int *)node3->content) == 42 && node3->next == NULL)
+        printf(COLOR_GREEN "Test 3 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 3 failed. Expected content: 42, Got: %d\n" COLOR_RESET, *((int *)node3->content));
+
+    // Test case 4: Check if the 'next' pointer is NULL for a newly created node
+    printf(COLOR_YELLOW "Test 4: Check if the 'next' pointer is NULL\n" COLOR_RESET);
+    t_list *node4 = ft_lstnew("Test");
+    if (node4 && node4->next == NULL)
+        printf(COLOR_GREEN "Test 4 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 4 failed. Expected 'next' to be NULL, but it was not.\n" COLOR_RESET);
+}
+void test_lstadd_front(void)
+{
+    printf(COLOR_BLUE "====== Test ft_lstadd_front ======\n" COLOR_RESET);
+
+    // Test case 1: Adding a node to an empty list
+    printf(COLOR_YELLOW "Test 1: Adding a node to an empty list:\n" COLOR_RESET);
+    t_list *head = NULL;  // Initialize an empty list
+    t_list *new_node = ft_lstnew("New Node");
+    if (new_node == NULL) {
+        printf(COLOR_RED "Test 1 failed. New node creation failed.\n" COLOR_RESET);
+        return;
+    }
+    ft_lstadd_front(&head, new_node);
+
+    if (head && head->content && strcmp(head->content, "New Node") == 0 && head->next == NULL)
+        printf(COLOR_GREEN "Test 1 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 1 failed. Expected: 'New Node', Got: '%s'\n" COLOR_RESET, head ? (char*)head->content : "NULL");
+
+    // Test case 2: Adding a node to a non-empty list
+    printf(COLOR_YELLOW "Test 2: Adding a node to a non-empty list:\n" COLOR_RESET);
+    t_list *node1 = ft_lstnew("Node 1");
+    t_list *node2 = ft_lstnew("Node 2");
+    if (node1 == NULL || node2 == NULL) {
+        printf(COLOR_RED "Test 2 failed. Node creation failed.\n" COLOR_RESET);
+        return;
+    }
+    head = node1;
+    ft_lstadd_front(&head, node2);
+
+    if (head == node2 && node2->content && strcmp(node2->content, "Node 2") == 0 &&
+        node2->next == node1 && node1->content && strcmp(node1->content, "Node 1") == 0 &&
+        node1->next == NULL)
+        printf(COLOR_GREEN "Test 2 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 2 failed. Expected: 'Node 2' -> 'Node 1'\n" COLOR_RESET);
+
+    // Test case 3: Adding multiple nodes
+    printf(COLOR_YELLOW "Test 3: Adding multiple nodes:\n" COLOR_RESET);
+    t_list *node3 = ft_lstnew("Node 3");
+    if (node3 == NULL) {
+        printf(COLOR_RED "Test 3 failed. Node creation failed.\n" COLOR_RESET);
+        return;
+    }
+    ft_lstadd_front(&head, node3);
+
+    if (head == node3 && node3->content && strcmp(node3->content, "Node 3") == 0 &&
+        node3->next == node2 && node2->content && strcmp(node2->content, "Node 2") == 0 &&
+        node2->next == node1 && node1->content && strcmp(node1->content, "Node 1") == 0 &&
+        node1->next == NULL)
+        printf(COLOR_GREEN "Test 3 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 3 failed. Expected: 'Node 3' -> 'Node 2' -> 'Node 1'\n" COLOR_RESET);
 }

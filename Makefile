@@ -6,7 +6,7 @@
 #    By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 22:02:38 by mmravec           #+#    #+#              #
-#    Updated: 2024/09/11 17:55:36 by mmravec          ###   ########.fr        #
+#    Updated: 2024/09/11 21:10:33 by mmravec          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,10 @@ SRCS = ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \
 	   ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c \
 	   ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c \
 	   ft_putendl_fd.c ft_putnbr_fd.c
-
 OBJS = $(SRCS:.c=.o)      # Object files corresponding to .c files
+
+BONUS_SRCS = ft_lstnew.c ft_lstadd_front.c
+BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
 # Rule to create the static library
 $(NAME): $(OBJS)
@@ -33,6 +35,9 @@ $(NAME): $(OBJS)
 
 # Default target to build the library
 all: $(NAME)
+
+bonus: $(OBJS) $(BONUS_OBJS)
+	ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
 
 # Clean up object files
 clean:
