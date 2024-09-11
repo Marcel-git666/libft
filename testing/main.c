@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:39:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/11 15:56:37 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/11 17:23:27 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	main(void)
     test_striteri();
     test_putchar_fd();
     test_putstr_fd();
+    test_putendl_fd();
 
     return (0);
 }
@@ -1193,3 +1194,62 @@ void test_putstr_fd(void)
     printf(COLOR_GREEN "\nTest 3 passed\n" COLOR_RESET);
 }
 
+void test_putendl_fd(void)
+{
+    printf(COLOR_BLUE "====== Test ft_putendl_fd ======\n" COLOR_RESET);
+
+    // Open a temporary file for testing
+    int fd = open("test_output.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
+    if (fd == -1)
+    {
+        printf(COLOR_RED "Error: Could not open test file\n" COLOR_RESET);
+        return;
+    }
+
+    // Test case 1: Output a simple string followed by a newline
+    printf(COLOR_YELLOW "Test 1: Output 'Hello World' followed by a newline to file:\n" COLOR_RESET);
+    ft_putendl_fd("Hello World", fd);
+    lseek(fd, 0, SEEK_SET); // Reset file pointer to the beginning
+    char buffer1[50] = {0};
+    read(fd, buffer1, sizeof(buffer1) - 1);
+    if (strcmp(buffer1, "Hello World\n") == 0)
+        printf(COLOR_GREEN "Test 1 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 1 failed. Expected: 'Hello World\\n', Got: '%s'\n" COLOR_RESET, buffer1);
+
+    // Clear file content and reset pointer
+    ftruncate(fd, 0);
+    lseek(fd, 0, SEEK_SET);
+
+    // Test case 2: Output an empty string followed by a newline
+    printf(COLOR_YELLOW "Test 2: Output an empty string followed by a newline to file:\n" COLOR_RESET);
+    ft_putendl_fd("", fd);
+    lseek(fd, 0, SEEK_SET);
+    char buffer2[50] = {0};
+    read(fd, buffer2, sizeof(buffer2) - 1);
+    if (strcmp(buffer2, "\n") == 0)
+        printf(COLOR_GREEN "Test 2 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 2 failed. Expected: '\\n', Got: '%s'\n" COLOR_RESET, buffer2);
+
+    // Clear file content and reset pointer
+    ftruncate(fd, 0);
+    lseek(fd, 0, SEEK_SET);
+
+    // Test case 3: Output a string with special characters followed by a newline
+    printf(COLOR_YELLOW "Test 3: Output 'Special chars: !@#$%%^&*()' followed by a newline to file:\n" COLOR_RESET);
+    ft_putendl_fd("Special chars: !@#$%^&*()", fd);
+    lseek(fd, 0, SEEK_SET);
+    char buffer3[50] = {0};
+    read(fd, buffer3, sizeof(buffer3) - 1);
+    if (strcmp(buffer3, "Special chars: !@#$%^&*()\n") == 0)
+        printf(COLOR_GREEN "Test 3 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 3 failed. Expected: 'Special chars: !@#$%%^&*()\\n', Got: '%s'\n" COLOR_RESET, buffer3);
+
+    // Close the test file
+    close(fd);
+
+    // Optionally, remove the test file if you don't need it afterward
+    remove("test_output.txt");
+}

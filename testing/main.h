@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:47:02 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/11 15:51:25 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/11 17:23:58 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <stdbool.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 #define COLOR_GREEN "\033[0;32m"
 #define COLOR_RED "\033[0;31m"
@@ -57,5 +59,5 @@ void test_strmapi(void);
 void test_striteri(void);
 void test_putchar_fd(void);
 void test_putstr_fd(void);
-
+void test_putendl_fd(void);
 #endif
