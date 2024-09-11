@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:39:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/11 17:23:27 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/11 17:43:03 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	main(void)
     test_putchar_fd();
     test_putstr_fd();
     test_putendl_fd();
+    test_putnbr_fd();
 
     return (0);
 }
@@ -1246,6 +1247,99 @@ void test_putendl_fd(void)
         printf(COLOR_GREEN "Test 3 passed\n" COLOR_RESET);
     else
         printf(COLOR_RED "Test 3 failed. Expected: 'Special chars: !@#$%%^&*()\\n', Got: '%s'\n" COLOR_RESET, buffer3);
+
+    // Close the test file
+    close(fd);
+
+    // Optionally, remove the test file if you don't need it afterward
+    remove("test_output.txt");
+}
+void test_putnbr_fd(void)
+{
+    printf(COLOR_BLUE "====== Test ft_putnbr_fd ======\n" COLOR_RESET);
+
+    // Open a temporary file for testing
+    int fd = open("test_output.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
+    if (fd == -1)
+    {
+        printf(COLOR_RED "Error: Could not open test file\n" COLOR_RESET);
+        return;
+    }
+
+    // Test case 1: Output a positive integer
+    printf(COLOR_YELLOW "Test 1: Output '12345' to file:\n" COLOR_RESET);
+    ft_putnbr_fd(12345, fd);
+    lseek(fd, 0, SEEK_SET);
+    char buffer1[50] = {0};
+    read(fd, buffer1, sizeof(buffer1) - 1);
+    if (strcmp(buffer1, "12345") == 0)
+        printf(COLOR_GREEN "Test 1 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 1 failed. Expected: '12345', Got: '%s'\n" COLOR_RESET, buffer1);
+
+    // Clear file content and reset pointer
+    ftruncate(fd, 0);
+    lseek(fd, 0, SEEK_SET);
+
+    // Test case 2: Output a negative integer
+    printf(COLOR_YELLOW "Test 2: Output '-98765' to file:\n" COLOR_RESET);
+    ft_putnbr_fd(-98765, fd);
+    lseek(fd, 0, SEEK_SET);
+    char buffer2[50] = {0};
+    read(fd, buffer2, sizeof(buffer2) - 1);
+    if (strcmp(buffer2, "-98765") == 0)
+        printf(COLOR_GREEN "Test 2 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 2 failed. Expected: '-98765', Got: '%s'\n" COLOR_RESET, buffer2);
+
+    // Clear file content and reset pointer
+    ftruncate(fd, 0);
+    lseek(fd, 0, SEEK_SET);
+
+    // Test case 3: Output zero
+    printf(COLOR_YELLOW "Test 3: Output '0' to file:\n" COLOR_RESET);
+    ft_putnbr_fd(0, fd);
+    lseek(fd, 0, SEEK_SET);
+    char buffer3[50] = {0};
+    read(fd, buffer3, sizeof(buffer3) - 1);
+    if (strcmp(buffer3, "0") == 0)
+        printf(COLOR_GREEN "Test 3 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 3 failed. Expected: '0', Got: '%s'\n" COLOR_RESET, buffer3);
+
+    // Clear file content and reset pointer
+    ftruncate(fd, 0);
+    lseek(fd, 0, SEEK_SET);
+
+    // Test case 4: Output INT_MAX
+    printf(COLOR_YELLOW "Test 4: Output 'INT_MAX' to file:\n" COLOR_RESET);
+    ft_putnbr_fd(INT_MAX, fd);
+    lseek(fd, 0, SEEK_SET);
+    char buffer4[50] = {0};
+    sprintf(buffer4, "%d", INT_MAX);  // Convert INT_MAX to string for comparison
+    char expected4[50] = {0};
+    read(fd, expected4, sizeof(expected4) - 1);
+    if (strcmp(expected4, buffer4) == 0)
+        printf(COLOR_GREEN "Test 4 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 4 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, buffer4, expected4);
+
+    // Clear file content and reset pointer
+    ftruncate(fd, 0);
+    lseek(fd, 0, SEEK_SET);
+
+    // Test case 5: Output INT_MIN
+    printf(COLOR_YELLOW "Test 5: Output 'INT_MIN' to file:\n" COLOR_RESET);
+    ft_putnbr_fd(INT_MIN, fd);
+    lseek(fd, 0, SEEK_SET);
+    char buffer5[50] = {0};
+    sprintf(buffer5, "%d", INT_MIN);  // Convert INT_MIN to string for comparison
+    char expected5[50] = {0};
+    read(fd, expected5, sizeof(expected5) - 1);
+    if (strcmp(expected5, buffer5) == 0)
+        printf(COLOR_GREEN "Test 5 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 5 failed. Expected: '%s', Got: '%s'\n" COLOR_RESET, buffer5, expected5);
 
     // Close the test file
     close(fd);
