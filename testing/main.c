@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:39:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/11 21:44:58 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/12 12:25:10 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int	main(void)
 	printf(    "===============================\n");
     test_lstnew();
     test_lstadd_front();
-
+    test_lstsize();
+    test_lstlast();
 
     return (0);
 }
@@ -1448,4 +1449,72 @@ void test_lstadd_front(void)
         printf(COLOR_GREEN "Test 3 passed\n" COLOR_RESET);
     else
         printf(COLOR_RED "Test 3 failed. Expected: 'Node 3' -> 'Node 2' -> 'Node 1'\n" COLOR_RESET);
+}
+void test_lstsize(void)
+{
+    printf(COLOR_BLUE "====== Test ft_lstsize ======\n" COLOR_RESET);
+
+    // Test case 1: Empty list
+    printf(COLOR_YELLOW "Test 1: Empty list\n" COLOR_RESET);
+    t_list *empty_list = NULL;
+    int size = ft_lstsize(empty_list);
+
+    if (size == 0)
+        printf(COLOR_GREEN "Test 1 passed: Expected size = 0, got size = %d\n" COLOR_RESET, size);
+    else
+        printf(COLOR_RED "Test 1 failed: Expected size = 0, got size = %d\n" COLOR_RESET, size);
+
+    // Test case 2: List with 3 nodes
+    printf(COLOR_YELLOW "Test 2: List with 3 nodes\n" COLOR_RESET);
+    t_list *node1 = ft_lstnew("Node 1");
+    t_list *node2 = ft_lstnew("Node 2");
+    t_list *node3 = ft_lstnew("Node 3");
+
+    if (node1 && node2 && node3) // Ensure nodes are created successfully
+    {
+        node1->next = node2;
+        node2->next = node3;
+        node3->next = NULL;
+
+        size = ft_lstsize(node1);
+
+        if (size == 3)
+            printf(COLOR_GREEN "Test 2 passed: Expected size = 3, got size = %d\n" COLOR_RESET, size);
+        else
+            printf(COLOR_RED "Test 2 failed: Expected size = 3, got size = %d\n" COLOR_RESET, size);
+    }
+    else
+    {
+        printf(COLOR_RED "Test 2 failed: Node creation failed.\n" COLOR_RESET);
+    }
+}
+void test_lstlast(void)
+{
+    printf(COLOR_BLUE "====== Test ft_lstlast ======\n" COLOR_RESET);
+
+    // Test 1: Empty list
+    printf(COLOR_YELLOW "Test 1: Getting the last node of an empty list:\n" COLOR_RESET);
+    t_list *empty_list = NULL;
+    t_list *last_node = ft_lstlast(empty_list);
+    printf(COLOR_YELLOW "Expected: NULL\n" COLOR_RESET);
+    if (last_node == NULL)
+        printf(COLOR_GREEN "Test 1 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 1 failed. Expected NULL\n" COLOR_RESET);
+
+    // Test 2: List with 3 nodes
+    printf(COLOR_YELLOW "Test 2: Getting the last node of a list with 3 nodes:\n" COLOR_RESET);
+    t_list *node1 = ft_lstnew("Node 1");
+    t_list *node2 = ft_lstnew("Node 2");
+    t_list *node3 = ft_lstnew("Node 3");
+
+    node1->next = node2;
+    node2->next = node3;
+
+    last_node = ft_lstlast(node1);
+    printf(COLOR_YELLOW "Expected: 'Node 3'\n" COLOR_RESET);
+    if (last_node == node3 && strcmp(last_node->content, "Node 3") == 0)
+        printf(COLOR_GREEN "Test 2 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 2 failed. Expected 'Node 3'\n" COLOR_RESET);
 }
