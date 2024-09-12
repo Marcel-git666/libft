@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:47:02 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/12 12:22:09 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/12 17:21:33 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,10 @@ void test_lstnew(void);
 void test_lstadd_front(void);
 void test_lstsize(void);
 void test_lstlast(void);
-
+void test_lstadd_back(void);
+void test_lstdelone(void);
+void test_lstclear(void);
+void test_lstiter(void);
+void test_lstmap(void);
 
 #endif

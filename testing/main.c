@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 21:39:46 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/12 12:25:10 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/09/12 17:21:15 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ int	main(void)
     test_lstadd_front();
     test_lstsize();
     test_lstlast();
+    test_lstadd_back();
+    test_lstdelone();
+    test_lstclear();
+    test_lstiter();
+    test_lstmap();
 
     return (0);
 }
@@ -1518,3 +1523,227 @@ void test_lstlast(void)
     else
         printf(COLOR_RED "Test 2 failed. Expected 'Node 3'\n" COLOR_RESET);
 }
+
+void test_lstadd_back(void)
+{
+    printf(COLOR_BLUE "====== Test ft_lstadd_back ======\n" COLOR_RESET);
+
+    // Test 1: Adding to an empty list
+    printf(COLOR_YELLOW "Test 1: Adding a node to an empty list:\n" COLOR_RESET);
+    t_list *empty_list = ft_lstnew("First Node");
+    t_list *new_node2 = ft_lstnew("Second Node");
+    ft_lstadd_back(&empty_list, new_node2);
+
+    if (empty_list->next == new_node2 && strcmp(new_node2->content, "Second Node") == 0 && new_node2->next == NULL)
+    {
+        printf(COLOR_GREEN "Test 1 passed\n" COLOR_RESET);
+    }
+    else
+    {
+        printf(COLOR_RED "Test 1 failed\n" COLOR_RESET);
+    }
+
+    // Test 2: Adding to a non-empty list
+    printf(COLOR_YELLOW "Test 2: Adding another node to the list:\n" COLOR_RESET);
+    t_list *new_node3 = ft_lstnew("Third Node");
+    ft_lstadd_back(&empty_list, new_node3);
+
+    if (empty_list->next->next == new_node3 && strcmp(new_node3->content, "Third Node") == 0 && new_node3->next == NULL)
+    {
+        printf(COLOR_GREEN "Test 2 passed\n" COLOR_RESET);
+    }
+    else
+    {
+        printf(COLOR_RED "Test 2 failed\n" COLOR_RESET);
+    }
+}
+
+void del_content(void *content)
+{
+    free(content);
+}
+
+void test_lstdelone(void)
+{
+    printf(COLOR_BLUE "====== Test ft_lstdelone ======\n" COLOR_RESET);
+
+    // Test 1: Deleting a node with allocated content
+    printf(COLOR_YELLOW "Test 1: Deleting a node with dynamically allocated content:\n" COLOR_RESET);
+    t_list *node1 = ft_lstnew(malloc(20)); // Allocate some content
+    if (node1 == NULL || node1->content == NULL)
+    {
+        printf(COLOR_RED "Test 1 failed (node creation failed)\n" COLOR_RESET);
+        return;
+    }
+    ft_lstdelone(node1, del_content);
+    printf(COLOR_GREEN "Test 1 passed (node deleted successfully)\n" COLOR_RESET);
+
+    // Test 2: Deleting a node with a static string (del should not free the string)
+    printf(COLOR_YELLOW "Test 2: Deleting a node with static content:\n" COLOR_RESET);
+    t_list *node2 = ft_lstnew("Static content");
+    ft_lstdelone(node2, NULL); // Since content is static, we pass NULL to del
+    printf(COLOR_GREEN "Test 2 passed (static content node deleted, no crash)\n" COLOR_RESET);
+
+    // Test 3: Deleting NULL (should do nothing)
+    printf(COLOR_YELLOW "Test 3: Deleting a NULL node:\n" COLOR_RESET);
+    ft_lstdelone(NULL, del_content);
+    printf(COLOR_GREEN "Test 3 passed (no crash with NULL node)\n" COLOR_RESET);
+}
+void test_lstclear(void)
+{
+    printf(COLOR_BLUE "====== Test ft_lstclear ======\n" COLOR_RESET);
+
+    // Test Case 1: Clearing a list with multiple nodes
+    printf(COLOR_YELLOW "Test 1: Clearing a list with multiple nodes:\n" COLOR_RESET);
+    t_list *node1 = ft_lstnew(strdup("Node 1"));
+    t_list *node2 = ft_lstnew(strdup("Node 2"));
+    t_list *node3 = ft_lstnew(strdup("Node 3"));
+    node1->next = node2;
+    node2->next = node3;
+    t_list *head = node1;
+
+    ft_lstclear(&head, del_content);
+    if (head == NULL)
+        printf(COLOR_GREEN "Test 1 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 1 failed. Expected head to be NULL\n" COLOR_RESET);
+
+    // Test Case 2: Clearing a list with a single node
+    printf(COLOR_YELLOW "Test 2: Clearing a list with a single node:\n" COLOR_RESET);
+    t_list *single_node = ft_lstnew(strdup("Single Node"));
+    head = single_node;
+
+    ft_lstclear(&head, del_content);
+    if (head == NULL)
+        printf(COLOR_GREEN "Test 2 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 2 failed. Expected head to be NULL\n" COLOR_RESET);
+
+    // Test Case 3: Clearing an already empty list
+    printf(COLOR_YELLOW "Test 3: Clearing an already empty list:\n" COLOR_RESET);
+    head = NULL;
+
+    ft_lstclear(&head, del_content);
+    if (head == NULL)
+        printf(COLOR_GREEN "Test 3 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 3 failed. Expected head to be NULL\n" COLOR_RESET);
+}
+
+void print_content(void *content)
+{
+    printf("%s\n", (char *)content);
+}
+
+void test_lstiter(void)
+{
+    printf(COLOR_BLUE "====== Test ft_lstiter ======\n" COLOR_RESET);
+
+    // Test Case 1: Iterating over a list with multiple nodes
+    printf(COLOR_YELLOW "Test 1: Iterating over a list with multiple nodes:\n" COLOR_RESET);
+    t_list *node1 = ft_lstnew("First");
+    t_list *node2 = ft_lstnew("Second");
+    t_list *node3 = ft_lstnew("Third");
+    node1->next = node2;
+    node2->next = node3;
+
+    // Function to print the content
+    ft_lstiter(node1, print_content);
+
+    if (node1 != NULL && node2 != NULL && node3 != NULL)
+        printf(COLOR_GREEN "Test 1 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 1 failed\n" COLOR_RESET);
+
+    // Test Case 2: Iterating over a list with a single node
+    printf(COLOR_YELLOW "Test 2: Iterating over a list with a single node:\n" COLOR_RESET);
+    t_list *single_node = ft_lstnew("Single Node");
+    ft_lstiter(single_node, print_content);
+
+    if (single_node != NULL)
+        printf(COLOR_GREEN "Test 2 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 2 failed\n" COLOR_RESET);
+
+    // Test Case 3: Iterating over an empty list
+    printf(COLOR_YELLOW "Test 3: Iterating over an empty list:\n" COLOR_RESET);
+    t_list *empty_list = NULL;
+    ft_lstiter(empty_list, print_content);
+
+    // No iteration should occur
+    if (empty_list == NULL)
+        printf(COLOR_GREEN "Test 3 passed\n" COLOR_RESET);
+    else
+        printf(COLOR_RED "Test 3 failed\n" COLOR_RESET);
+
+    // Cleanup after tests
+    // ft_lstclear(&node1, free);
+    // ft_lstclear(&single_node, free);
+}
+
+void *duplicate_content(void *content)
+{
+    return strdup((char *)content);
+}
+
+// Test function for ft_lstmap
+void test_lstmap(void)
+{
+    printf(COLOR_BLUE "====== Test ft_lstmap ======\n" COLOR_RESET);
+
+    // Test Case 1: Mapping a list with multiple nodes
+    printf(COLOR_YELLOW "Test 1: Mapping a list with multiple nodes:\n" COLOR_RESET);
+    t_list *node1 = ft_lstnew(strdup("First"));
+    t_list *node2 = ft_lstnew(strdup("Second"));
+    t_list *node3 = ft_lstnew(strdup("Third"));
+    node1->next = node2;
+    node2->next = node3;
+
+    t_list *mapped_list = ft_lstmap(node1, duplicate_content, del_content);
+
+    if (mapped_list && strcmp((char *)mapped_list->content, "First") == 0 &&
+        strcmp((char *)mapped_list->next->content, "Second") == 0 &&
+        strcmp((char *)mapped_list->next->next->content, "Third") == 0 &&
+        mapped_list->next->next->next == NULL)
+    {
+        printf(COLOR_GREEN "Test 1 passed\n" COLOR_RESET);
+    }
+    else
+    {
+        printf(COLOR_RED "Test 1 failed\n" COLOR_RESET);
+    }
+
+    ft_lstclear(&mapped_list, del_content);
+
+    // Test Case 2: Mapping a list with a single node
+    printf(COLOR_YELLOW "Test 2: Mapping a list with a single node:\n" COLOR_RESET);
+    t_list *single_node = ft_lstnew(strdup("Single"));
+    mapped_list = ft_lstmap(single_node, duplicate_content, del_content);
+
+    if (mapped_list && strcmp((char *)mapped_list->content, "Single") == 0 &&
+        mapped_list->next == NULL)
+    {
+        printf(COLOR_GREEN "Test 2 passed\n" COLOR_RESET);
+    }
+    else
+    {
+        printf(COLOR_RED "Test 2 failed\n" COLOR_RESET);
+    }
+
+    ft_lstclear(&mapped_list, del_content);
+    ft_lstdelone(single_node, del_content);
+
+    // Test Case 3: Mapping an empty list
+    printf(COLOR_YELLOW "Test 3: Mapping an empty list:\n" COLOR_RESET);
+    mapped_list = ft_lstmap(NULL, duplicate_content, del_content);
+
+    if (mapped_list == NULL)
+    {
+        printf(COLOR_GREEN "Test 3 passed\n" COLOR_RESET);
+    }
+    else
+    {
+        printf(COLOR_RED "Test 3 failed\n" COLOR_RESET);
+    }
+}
+
