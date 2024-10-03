@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 17:26:55 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/17 10:26:10 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/03 11:22:49 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,17 @@ static char	*alloc_copy_word(char *current_word, int word_length)
 	return (word);
 }
 
-static void	extract_words(char **result, char const **s, char c, int *words)
+static void	free_allocated_memory(char **result, int words)
+{
+	int		i;
+
+	i = 0;
+	while (i < words)
+		free(result[i++]);
+	free(result);
+}
+
+static int	extract_words(char **result, char const **s, char c, int *words)
 {
 	char	*current_word;
 	int		word_length;
@@ -62,6 +72,8 @@ static void	extract_words(char **result, char const **s, char c, int *words)
 			if (word_length > 0)
 			{
 				result[*words] = alloc_copy_word(current_word, word_length);
+				if (!result[*words])
+					return (free_allocated_memory(result, *words), 0);
 				(*words)++;
 				word_length = 0;
 			}
@@ -74,7 +86,13 @@ static void	extract_words(char **result, char const **s, char c, int *words)
 		(*s)++;
 	}
 	if (word_length > 0)
-		result[(*words)++] = alloc_copy_word(current_word, word_length);
+	{
+		result[*words] = alloc_copy_word(current_word, word_length);
+		if (!result[*words])
+			return (free_allocated_memory(result, *words), 0);
+		(*words)++;
+	}
+	return (1);
 }
 
 char	**ft_split(char const *s, char c)
@@ -88,7 +106,8 @@ char	**ft_split(char const *s, char c)
 	result = (char **) malloc((count_words(s, c) + 1) * sizeof(char *));
 	if (!result)
 		return (NULL);
-	extract_words(result, &s, c, &words);
+	if (!extract_words(result, &s, c, &words))
+		return (NULL);
 	result[words] = NULL;
 	return (result);
 }
